@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EX05</title>
+</head>
+<!--원래 ${userDTO.name} userDTO를 계속 사용하지 않기 위해 object로 -->
+<body th:object="${userDTO}">
+<h1 th:text="'이름: '+ *{name}"></h1>
+<h1 th:text="|나이: *{age}살|"></h1>
+</body>
+</html>
