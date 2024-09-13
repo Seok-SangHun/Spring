@@ -19,7 +19,7 @@ public class PostMapperTests {
                 new PostVO(
                         null, "테스트 제목2", "테스트 내용2",
                         0, true,
-                        null, null, 30L);
+                        null, null, 3L);
 
         postMapper.insert(postVO);
     }
@@ -31,22 +31,21 @@ public class PostMapperTests {
 
     @Test
     public void testSelectById(){
-        Long id = 22L;
+        Long id = 1L;
         log.info("{}", postMapper.selectById(id).toString());
         postMapper.increaseReadCount(id);
     }
 
     @Test
     public void testUpdate(){
-        PostDTO postDTO = postMapper.selectById(22L);
+        PostDTO postDTO = postMapper.selectById(1L);
         postDTO.setPostTitle("수정된 게시글 제목");
         postMapper.update(postDTO.toVO());
     }
 
     @Test
     public void testSoftDelete(){
-
-        postMapper.softDelete(22L);
+        postMapper.softDelete(2L);
     }
 
     @Test

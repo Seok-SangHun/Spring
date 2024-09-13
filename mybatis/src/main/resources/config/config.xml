@@ -9,7 +9,7 @@
         <typeAlias type="com.app.mybatis.domain.MemberDTO" alias="memberDTO"/>
         <typeAlias type="com.app.mybatis.domain.PostVO" alias="postVO"/>
         <typeAlias type="com.app.mybatis.domain.PostDTO" alias="postDTO"/>
-        <typeAlias type="com.app.mybatis.domain.ReplyVO" alias="ReplyVO"/>
-        <typeAlias type="com.app.mybatis.domain.ReplyDTO" alias="ReplyDTO"/>
+        <typeAlias type="com.app.mybatis.domain.ReplyVO" alias="replyVO"/>
+        <typeAlias type="com.app.mybatis.domain.ReplyDTO" alias="replyDTO"/>
     </typeAliases>
 </configuration>
