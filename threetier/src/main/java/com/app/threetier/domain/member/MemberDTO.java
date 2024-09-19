@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
 @Getter @Setter
 @ToString @EqualsAndHashCode(onlyExplicitlyIncluded = true)

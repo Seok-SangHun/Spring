@@ -16,6 +16,7 @@ public void insert(ReplyVO replyVO);
     public List<ReplyDTO> selectAll();
 
 //    댓글 삭제
+//    전달해야 할 것이 2개만 가져와야할때 @Param 사용(3개도 가능)
     public void delete(@Param("id") Long id, @Param("replyOrder") int replyOrder);
 
 //    댓글 수정

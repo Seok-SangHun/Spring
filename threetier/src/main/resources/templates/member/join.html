@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+</head>
+<body>
+<!--controller에서 받은 빈 객체 memberDTO-->
+<!--timeleaf 문법 적용 th:-->
+<form th:action="@{/member/join}" method="post" th:object="${memberDTO}">
+    <div>
+<!-- id, name, value 3개의 속성이 한번에 되게 하는 속성이 filed이다.-->
+        <input type="text" th:field="*{memberEmail}">
+    </div>
+    <div>
+        <input type="text" th:field="*{memberPassword}">
+    </div>
+    <div>
+        <input type="text" th:field="*{memberName}">
+    </div>
+    <button>완료</button>
+</form>
+</body>
+</html>
