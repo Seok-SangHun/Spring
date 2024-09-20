@@ -18,9 +18,9 @@ public class MemberMapperTests {
     @Test
     public void testInsert(){
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMemberEmail("hds1234@gmail.com");
+        memberDTO.setMemberEmail("SSH1234@gmail.com");
         memberDTO.setMemberPassword("1234");
-        memberDTO.setMemberName("한동석");
+        memberDTO.setMemberName("석상훈");
 
         memberMapper.insert(memberDTO.toVO());
     }

@@ -23,7 +23,6 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 @Controller
-// 최상위 경로를 설정하여 컨트롤러를 구분한다.
 @RequestMapping("/member/*")
 @RequiredArgsConstructor
 @Slf4j
@@ -32,33 +31,17 @@ public class MemberController {
 
 //    회원가입 페이지로 이동(GET)
     @GetMapping("join")
-//    화면에 있는 input태그의 속성을 채울 때,
-//    해당 객체의 필드명과 동일하게 맞춰야 한다.
-//    이를 위해 비어있는 객체를 화면으로 전달해준다.
     public void goToJoinForm(MemberDTO memberDTO, HttpSession session){;}
 
 //    회원가입 완료(POST)
-//    경로가 같아도 REQUEST METHOD가 다르면 구분할 수 있다.
     @PostMapping("join")
-//    화면에서 작성된 input태그의 name과 MemberDTO 필드명이 mapping된다.
     public RedirectView join(MemberDTO memberDTO){
-//        전달받은 정보를 테이블에 INSERT한다.
         memberService.join(memberDTO.toVO());
-//        redirect방식을 사용해서 member/login 컨트롤러로 이동한다.
-//        만약 forward방식을 사용해서 login.html로 이동하게 되면,
-//        화면은 로그인 페이지가 나오겠지만, 경로는 member/join(POST)이기 때문에
-//        새로고침 할 때마다 현재 메소드가 계속 실행되면서 INSERT쿼리 또한 매번 발생한다.
-//        이는 심각한 문제이다.
         return new RedirectView( "/member/login");
     }
 
     @GetMapping("login")
-//    @RequestParam(required = false)
-//    전달받은 데이터가 null일 경우 required의 default값이 true이기 때문에,
-//    NPE가 발생할 수 있다. 이를 필수가 아닌 선택으로(null 허용) 변경하고 싶다면,
-//    required 설정을 false로 지정한다.
     public void goToLoginForm(@RequestParam(required = false) Boolean status, MemberDTO memberDTO, HttpServletRequest request, Model model){
-//        log.info("{}", status);
 
 //        쿠키 조회
         Cookie[] cookies = request.getCookies();
