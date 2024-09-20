@@ -62,36 +62,12 @@ public class MemberController {
     }
 
     @PostMapping("login")
-//    HttpSession
-//    서버의 Session영역을 관리해주는 객체이다.
-//    Spring이 해당 객체를 주입해준다.
     public RedirectView login(MemberDTO memberDTO, String save, HttpSession session, HttpServletResponse response){
-//        memberService.login(memberDTO.toVO())
-//                .ifPresentOrElse(
-//                        (member) -> {
-//                            log.info(member.toString());
-//                            log.info("로그인 성공");
-//                        },
-//                        () -> {
-//                            log.info("로그인 실패");
-//                        });
-        
         Optional<MemberVO> foundMember = memberService.login(memberDTO.toVO());
-//        null인지 검사할 때
-//        if(memberService.login(memberDTO.toVO()).isPresent()){
-//
-//        }
-
-//        null이 아닐 때에만 실행
-//        foundMember.ifPresent((member) -> {
-//            session.setAttribute("memberId", member.getId());
-//        });
 
 //        null이 아니면 단일 객체 리턴, null이면 예외 발생
         MemberVO memberVO = foundMember.orElseThrow(() -> {throw new LoginFailException("(" + LocalTime.now() + ")로그인 실패");});
 
-//        id만 담아놓으면 사용할 때마다 SELECT 쿼리를 발생시켜야 한다(싫어!)
-//        session.setAttribute("memberId", memberVO.getId());
 //        전체 정보를 담아놓기 때문에 쿼리를 따로 발생시킬 필요 없다(좋아!)
         session.setAttribute("member", memberVO);
 
@@ -127,28 +103,17 @@ public class MemberController {
 //    로그 아웃
     @GetMapping("logout")
     public RedirectView logout(HttpSession session){
-        session.invalidate();
+        session.invalidate(); //세션 삭제
         return new RedirectView("/member/login");
     }
 
 //    회원 정보 조회
 //    회원 정보 수정
     @GetMapping(value = {"read", "update"})
-    public void goToReadForm(/*Long id, */Model model, HttpSession session){
-//        memberService.getMember(id).ifPresent((member) -> {
-//            log.info(member.toString());
-//        });
-//        Long id = (Long)session.getAttribute("memberId");
-//        model.addAttribute("member", memberService.getMember(id).get().toDTO());
+    public void goToReadForm(Model model, HttpSession session){
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
         model.addAttribute("member", memberVO);
     }
-
-//    회원 정보 수정
-//    @GetMapping("update")
-//    public void goToUpdateForm(Long id){
-//
-//    }
 
     @PostMapping("update")
     public RedirectView update(MemberDTO memberDTO){
