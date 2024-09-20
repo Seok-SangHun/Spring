@@ -41,26 +41,30 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public void goToLoginForm(/*@RequestParam(required = false) Boolean status, */MemberDTO memberDTO, HttpServletRequest request, Model model){
+    public void goToLoginForm(MemberDTO memberDTO, HttpServletRequest request, Model model) {
 
-//        쿠키 조회
+        // 쿠키 조회
         Cookie[] cookies = request.getCookies();
 
-        for(int i = 0; i < cookies.length; i++){
-            log.info("===========");
-            log.info(cookies[i].getName());
-            log.info("===========");
-//            save라는 key가 있다면,
-            if(cookies[i].getName().equals("save")){
-//                해당 value를 화면으로 보낸다.
-                model.addAttribute("save", cookies[i].getValue());
-            }
-            if(cookies[i].getName().equals("memberEmail")){
-                memberDTO.setMemberEmail(cookies[i].getValue());
-            }
+        // 쿠키가 null인지 확인
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                log.info("===========");
+                log.info(cookie.getName());
 
+                // "save"라는 key가 있다면 해당 value를 화면으로 보냄
+                if (cookie.getName().equals("save")) {
+                    model.addAttribute("save", cookie.getValue());
+                }
+
+                // "memberEmail" 쿠키가 있다면 memberDTO에 설정
+                if (cookie.getName().equals("memberEmail")) {
+                    memberDTO.setMemberEmail(cookie.getValue());
+                }
+            }
         }
     }
+
 
     @PostMapping("login")
     public RedirectView login(MemberDTO memberDTO, String save, HttpSession session, HttpServletResponse response){
