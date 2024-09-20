@@ -10,5 +10,7 @@
         <typeAlias type="com.app.threetier.domain.member.MemberDTO" alias="memberDTO"/>
         <typeAlias type="com.app.threetier.domain.post.PostVO" alias="postVO"/>
         <typeAlias type="com.app.threetier.domain.post.PostDTO" alias="postDTO"/>
+        <typeAlias type="com.app.threetier.domain.user.UserVO" alias="userVO"/>
+        <typeAlias type="com.app.threetier.domain.user.UserDTO" alias="userDTO"/>
     </typeAliases>
 </configuration>

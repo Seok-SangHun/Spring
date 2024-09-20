@@ -41,7 +41,7 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public void goToLoginForm(MemberDTO memberDTO, HttpServletRequest request, Model model) {
+    public void goToLoginForm(MemberDTO memberDTO, HttpServletRequest request, Model model/*@RequestParam(required = false) Boolean status, */) {
 
         // 쿠키 조회
         Cookie[] cookies = request.getCookies();
@@ -62,6 +62,8 @@ public class MemberController {
                     memberDTO.setMemberEmail(cookie.getValue());
                 }
             }
+        }else{
+            log.info("쿠기가 없습니다.");
         }
     }
 
