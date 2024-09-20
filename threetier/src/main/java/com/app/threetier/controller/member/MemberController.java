@@ -123,6 +123,8 @@ public class MemberController {
     public void goToReadForm(Model model, HttpSession session){
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
         model.addAttribute("member", memberVO); //화면에서
+//        Long id = (Long) session.getAttribute("memberId");
+//        model.addAttribute("memberDTO", memberService.getMember(id).get().toDTO());
     }
 
     @PostMapping("update")
