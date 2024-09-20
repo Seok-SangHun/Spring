@@ -41,7 +41,7 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public void goToLoginForm(MemberDTO memberDTO, HttpServletRequest request, Model model){
+    public void goToLoginForm(/*@RequestParam(required = false) Boolean status, */MemberDTO memberDTO, HttpServletRequest request, Model model){
 
 //        쿠키 조회
         Cookie[] cookies = request.getCookies();
