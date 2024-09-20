@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostVO {
-    @EqualsAndHashCode.Include
     private Long id;
     private String postTitle;
     private String postContent;
-    private int postReadCount;
-    private int status;
+    private Long memberId;
     private String createdDate;
     private String updatedDate;
-    private Long memberId;
+    private int postReadCount;
 }

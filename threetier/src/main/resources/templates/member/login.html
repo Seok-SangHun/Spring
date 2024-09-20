@@ -9,16 +9,38 @@
 </head>
 <body>
 <form th:action="@{/member/login}" method="post" th:object="${memberDTO}">
-<!--    <div>-->
-<!--        <input type="text" th:field="*{memberEmail}">-->
-<!--    </div>-->
     <div>
-        <input type="text" th:field="*{memberEmail}" placeholder="이메일">
+        <input type="text" th:field="*{memberEmail}">
     </div>
     <div>
-        <input type="text" th:field="*{memberPassword}" placeholder="비밀번호">
+        <input type="text" th:field="*{memberPassword}">
     </div>
-    <button>완료</button>
+    <label>
+        <input type="checkbox" name="save" value="true"> 아이디 저장
+    </label>
+    <button>로그인</button>
 </form>
 </body>
+<script th:inline="javascript">
+    const save = [[${save}]];
+    const saveInput = document.querySelector("input[name=save]");
+    if(save) {
+        saveInput.checked = true;
+    }
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

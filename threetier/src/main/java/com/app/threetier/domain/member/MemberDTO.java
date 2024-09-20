@@ -17,6 +17,7 @@ public class MemberDTO {
     private String memberEmail;
     private String memberPassword;
     private String memberName;
+    private String status;
 
     public MemberVO toVO(){
         return new MemberVO(id, memberEmail, memberPassword, memberName);

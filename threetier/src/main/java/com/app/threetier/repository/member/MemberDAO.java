@@ -1,12 +1,10 @@
 package com.app.threetier.repository.member;
 
 import com.app.threetier.domain.member.MemberVO;
-import com.app.threetier.domain.member.MemberDTO;
 import com.app.threetier.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,30 +12,27 @@ import java.util.Optional;
 public class MemberDAO {
     private final MemberMapper memberMapper;
 
-    //    회원가입
+//    회원가입
     public void save(MemberVO memberVO){
         memberMapper.insert(memberVO);
     }
 
-    //    로그인
+//    로그인
     public Optional<MemberVO> findByMemberEmailAndMemberPassword(MemberVO memberVO){
         return memberMapper.selectByMemberEmailAndMemberPassword(memberVO);
     }
 
-    public List<MemberDTO> findAll() {
-        return memberMapper.findAll();
-    }
-    //    회원 정보 조회
+//    회원 정보 조회
     public Optional<MemberVO> findById(Long id){
         return memberMapper.selectById(id);
     }
 
-    //    회원 정보 수정
+//    회원 정보 수정
     public void setMember(MemberVO memberVO){
         memberMapper.update(memberVO);
     }
-//    delete -> delete
-    public void delete(Long id) {
+
+    public void delete(Long id){
         memberMapper.delete(id);
     }
 }

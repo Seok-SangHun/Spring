@@ -1,64 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.threetier.mapper.PostMapper">
-
-    <!-- 게시글 삽입 -->
     <insert id="insert">
-        INSERT INTO TBL_POST(ID, POST_TITLE, POST_CONTENT, MEMBER_ID)
-        VALUES(SEQ_POST.NEXTVAL, #{postTitle}, #{postContent}, #{memberId})
+        INSERT INTO TBL_POST(ID, POST_TITLE, POST_CONTENT, MEMBER_ID, POST_READ_COUNT)
+        VALUES(SEQ_POST.NEXTVAL, #{postTitle}, #{postContent}, #{memberId}, #{postReadCount})
     </insert>
 
-    <!-- 모든 게시글 조회 (회원 정보 포함) -->
-    <select id="findAll" resultType="postDTO">
-        SELECT P.ID, P.POST_TITLE, P.POST_CONTENT, P.POST_READ_COUNT,
-               P.STATUS, P.CREATED_DATE, P.UPDATED_DATE, P.MEMBER_ID,
-               M.MEMBER_NAME, M.MEMBER_EMAIL
-        FROM TBL_POST P
-                 JOIN TBL_MEMBER M ON M.ID = P.MEMBER_ID
-        WHERE P.STATUS = 1
+    <select id="selectAll" resultType="postDTO">
+        SELECT P2.ID, MEMBER_NAME, POST_TITLE, POST_CONTENT, MEMBER_ID, CREATED_DATE, UPDATED_DATE, POST_READ_COUNT
+        FROM TBL_MEMBER M JOIN
+        (
+            SELECT ROWNUM R, ID, POST_TITLE, POST_CONTENT, MEMBER_ID, CREATED_DATE, UPDATED_DATE, POST_READ_COUNT
+            FROM
+            (
+                SELECT ID, POST_TITLE, POST_CONTENT, MEMBER_ID, CREATED_DATE, UPDATED_DATE, POST_READ_COUNT
+                FROM TBL_POST
+                ORDER BY
+                <choose>
+                    <when test="order == 'recent'.toString()">ID</when>
+                    <otherwise>POST_READ_COUNT</otherwise>
+                </choose>
+                DESC
+            ) P1
+        <![CDATA[
+            WHERE ROWNUM <= #{pagination.endRow}) P2
+        ON M.ID = P2.MEMBER_ID AND P2.R >= #{pagination.startRow}
+        ]]>
     </select>
 
-    <!-- 특정 게시글 조회 (회원 정보 포함) -->
-    <select id="findById" resultType="postDTO">
-        SELECT P.ID, P.POST_TITLE, P.POST_CONTENT, P.POST_READ_COUNT,
-               P.STATUS, P.CREATED_DATE, P.UPDATED_DATE, P.MEMBER_ID,
-               M.MEMBER_NAME, M.MEMBER_EMAIL
-        FROM TBL_POST P
-                 JOIN TBL_MEMBER M ON M.ID = P.MEMBER_ID
-        WHERE P.ID = #{id} AND P.STATUS = 1
+    <select id="selectTotal">
+        SELECT COUNT(*) FROM TBL_POST
     </select>
-
-    <!-- 게시글 업데이트 -->
-    <update id="update">
-        UPDATE TBL_POST
-        SET POST_TITLE = #{postTitle}, POST_CONTENT = #{postContent}, UPDATED_DATE = CURRENT_TIMESTAMP
-        WHERE ID = #{id}
-    </update>
-
-    <!-- 게시글 조회 수 증가 -->
-    <update id="increaseReadCount">
-        UPDATE TBL_POST
-        SET POST_READ_COUNT = POST_READ_COUNT + 1
-        WHERE ID = #{id}
-    </update>
-
-    <!-- 게시글 소프트 삭제 -->
-    <update id="delete">
-        UPDATE TBL_POST
-        SET STATUS = 0
-        WHERE ID = #{id}
-    </update>
-
-    <!-- 모든 게시글 조회 (정렬 포함) -->
-    <select id="selectAllOrdered" resultType="postDTO">
-        SELECT P.ID, P.POST_TITLE, P.POST_CONTENT, P.POST_READ_COUNT,
-               P.STATUS, P.CREATED_DATE, P.UPDATED_DATE, P.MEMBER_ID,
-               M.MEMBER_NAME, M.MEMBER_EMAIL
-        FROM TBL_POST P
-                 JOIN TBL_MEMBER M ON M.ID = P.MEMBER_ID
-        WHERE P.STATUS = 1
-        ORDER BY P.ID DESC
-    </select>
-
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

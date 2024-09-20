@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 목록</title>
+</head>
+<body>
+    <a href="/post/list?order=recent">최신순</a><a href="/post/list?order=popular">인기순</a>
+    <table id="post-table">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성 날짜</th>
+        </tr>
+    </table>
+<div id="page-wrap"></div>
+</body>
+<script th:inline="javascript">
+    const pagination = [[${pagination}]]
+    const posts = [[${posts}]]
+    const table = document.getElementById("post-table");
+    const pageWrap = document.getElementById("page-wrap");
+    let text = ``;
+    posts.forEach((post) => {
+        text += `
+            <tr>
+                <td>${post.id}</td>
+                <td>${post.memberName}</td>
+                <td>${post.postTitle}</td>
+                <td>${post.postReadCount}</td>
+                <td>${post.createdDate}</td>
+            </tr>
+        `;
+    });
+    table.innerHTML += text;
+
+    text = ``;
+    for(let i=0; i<pagination.pageCount; i++){
+        text += `<a href="/post/list?page=${i+1}">${i+1}</a>`
+    }
+    pageWrap.innerHTML = text;
+</script>
+</html>

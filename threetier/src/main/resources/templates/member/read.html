@@ -8,23 +8,22 @@
     <title>마이 페이지</title>
 </head>
 <body>
-<button id="go-update">수정하기</button>
-<button id="go-delete">삭제하기</button>
-<table th:object="${memberDTO}">
-    <tr>
-        <th>이메일</th>
-        <th>이름</th>
-    </tr>
-    <tr class="member-data">
-        <!--            <td th:text="*{memberEmail}"></td>-->
-        <!--            <td th:text="*{memberName}"></td>-->
-        <td id="memberEmail"></td>
-        <td id="memberName"></td>
-    </tr>
-</table>
+    <button id="go-update">수정하기</button>
+    <table th:object="${member}">
+        <tr>
+            <th>이메일</th>
+            <th>이름</th>
+        </tr>
+        <tr class="member-data">
+<!--            <td th:text="*{memberEmail}"></td>-->
+<!--            <td th:text="*{memberName}"></td>-->
+            <td id="memberEmail"></td>
+            <td id="memberName"></td>
+        </tr>
+    </table>
 </body>
 <script th:inline="javascript">
-    const memberDTO = [[${memberDTO}]];
+    const memberDTO = [[${member}]];
     const memberEmail = document.getElementById("memberEmail");
     const memberName = document.getElementById("memberName");
 
@@ -34,9 +33,6 @@
     document.getElementById("go-update").addEventListener("click", (e) => {
         location.href = `/member/update?id=${memberDTO.id}`;
     });
-    document.getElementById("go-delete").addEventListener("click",(e) => {
-        location.href = `/member/delete?id=${memberDTO.id}`
-    })
 </script>
 </html>
 

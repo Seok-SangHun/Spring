@@ -1,28 +1,23 @@
 package com.app.threetier.domain.post;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter @Setter @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
 public class PostDTO {
-    @EqualsAndHashCode.Include
     private Long id;
     private String postTitle;
     private String postContent;
-    private int postReadCount;
-    private int status;
+    private Long memberId;
     private String createdDate;
     private String updatedDate;
-    private Long memberId;
-    private String memberEmail;
+    private int postReadCount;
     private String memberName;
 
     public PostVO toVO(){
-        return new PostVO(id, postTitle, postContent, postReadCount, status, createdDate, updatedDate, memberId);
+        return new PostVO(id, postTitle, postContent, memberId, createdDate, updatedDate, postReadCount);
     }
 }
