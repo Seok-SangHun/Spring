@@ -28,7 +28,6 @@ public class PostController {
     @PostMapping("write")
     public void write(PostDTO postDTO){
         postDTO.setMemberId(((MemberVO) session.getAttribute("member")).getId());
-
         postService.write(postDTO.toVO());
     }
 

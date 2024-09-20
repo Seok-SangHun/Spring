@@ -41,18 +41,19 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public void goToLoginForm(@RequestParam(required = false) Boolean status, MemberDTO memberDTO, HttpServletRequest request, Model model){
+    public void goToLoginForm(MemberDTO memberDTO, HttpServletRequest request, Model model){
 
 //        쿠키 조회
         Cookie[] cookies = request.getCookies();
 
         for(int i = 0; i < cookies.length; i++){
+            log.info("===========");
             log.info(cookies[i].getName());
+            log.info("===========");
 //            save라는 key가 있다면,
             if(cookies[i].getName().equals("save")){
 //                해당 value를 화면으로 보낸다.
                 model.addAttribute("save", cookies[i].getValue());
-
             }
             if(cookies[i].getName().equals("memberEmail")){
                 memberDTO.setMemberEmail(cookies[i].getValue());
@@ -66,10 +67,13 @@ public class MemberController {
         Optional<MemberVO> foundMember = memberService.login(memberDTO.toVO());
 
 //        null이 아니면 단일 객체 리턴, null이면 예외 발생
-        MemberVO memberVO = foundMember.orElseThrow(() -> {throw new LoginFailException("(" + LocalTime.now() + ")로그인 실패");});
+        MemberVO memberVO = foundMember.orElseThrow(
+                () -> {
+                    throw new LoginFailException("(" + LocalTime.now() + ")로그인 실패");
+                });
 
 //        전체 정보를 담아놓기 때문에 쿼리를 따로 발생시킬 필요 없다(좋아!)
-        session.setAttribute("member", memberVO);
+        session.setAttribute("member", memberVO); // member는 session에 저장할 속성의 이름
 
 //        화면에서 아이디 저장을 선택했다면 null이 아니다.
         if(save != null){
@@ -112,7 +116,7 @@ public class MemberController {
     @GetMapping(value = {"read", "update"})
     public void goToReadForm(Model model, HttpSession session){
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
-        model.addAttribute("member", memberVO);
+        model.addAttribute("member", memberVO); //화면에서
     }
 
     @PostMapping("update")

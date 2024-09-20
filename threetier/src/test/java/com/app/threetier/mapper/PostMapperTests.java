@@ -39,16 +39,17 @@ public class PostMapperTests {
         }
     }
 
-//    @Test
-//    public void testSelectAll(){
-//        Pagination pagination = new Pagination();
-//        pagination.setPage(3);
-//        pagination.setTotal(postMapper.selectTotal());
-//        pagination.progress();
-//        List<PostDTO> posts = postMapper.selectAll(pagination);
-//        log.info("{}", posts.size());
-//        posts.stream().map(PostDTO::toString).forEach(log::info);
-//    }
+    @Test
+    public void testSelectAll(){
+        Pagination pagination = new Pagination();
+        String recent = "recent";
+        pagination.setPage(3);
+        pagination.setTotal(postMapper.selectTotal());
+        pagination.progress();
+        List<PostDTO> posts = postMapper.selectAll(pagination, recent);
+        log.info("{}", posts.size());
+        posts.stream().map(PostDTO::toString).forEach(log::info);
+    }
 }
 
 
