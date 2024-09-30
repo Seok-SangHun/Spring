@@ -23,7 +23,8 @@
                 DESC
             ) P1
         <![CDATA[
-            WHERE ROWNUM <= #{pagination.endRow}) P2
+            WHERE ROWNUM <= #{pagination.endRow}
+        ) P2
         ON M.ID = P2.MEMBER_ID AND P2.R >= #{pagination.startRow}
         ]]>
     </select>

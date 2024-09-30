@@ -13,6 +13,7 @@ public interface PostMapper {
 //    게시글 작성
     public void insert(PostVO postVO);
 //    게시글 전체 조회
+//    param안에 작성한 이름으로 SQL에 전달(pagination, order)
     public List<PostDTO> selectAll(@Param("pagination") Pagination pagination, @Param("order") String order);
 //    게시글 전체 개수 조회
     public int selectTotal();

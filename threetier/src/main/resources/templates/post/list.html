@@ -7,22 +7,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>게시글 목록</title>
 </head>
+<style>
+    table {
+        width: 1000px;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+</style>
 <body>
     <a href="/post/list?order=recent">최신순</a><a href="/post/list?order=popular">인기순</a>
     <table id="post-table">
         <tr>
             <th>번호</th>
-            <th>제목</th>
             <th>작성자</th>
+            <th>제목</th>
             <th>조회수</th>
             <th>작성 날짜</th>
         </tr>
     </table>
 <div id="page-wrap"></div>
+<button id="go-read">조회하기</button>
 </body>
 <script th:inline="javascript">
+    const member = [[${member}]]
     const pagination = [[${pagination}]]
     const posts = [[${posts}]]
+    const order = [[${order}]]
     const table = document.getElementById("post-table");
     const pageWrap = document.getElementById("page-wrap");
     let text = ``;
@@ -41,8 +62,12 @@
 
     text = ``;
     for(let i=0; i<pagination.pageCount; i++){
-        text += `<a href="/post/list?page=${i+1}">${i+1}</a>`
+        text += `<a href="/post/list?page=${i + 1}&order=${order}">${i + 1}</a>`;
     }
     pageWrap.innerHTML = text;
+
+    document.getElementById("go-read").addEventListener("click",()=>{
+        location.href = `/member/read?id=${member.id}`;
+    })
 </script>
 </html>

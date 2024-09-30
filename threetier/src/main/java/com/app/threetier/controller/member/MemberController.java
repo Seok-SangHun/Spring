@@ -120,7 +120,7 @@ public class MemberController {
 //    회원 정보 조회
 //    회원 정보 수정
     @GetMapping(value = {"read", "update"})
-    public void goToReadForm(Model model, HttpSession session){
+    public void goToReadForm(Model model, HttpSession session) {
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
         model.addAttribute("member", memberVO); //화면에서
 //        Long id = (Long) session.getAttribute("memberId");
@@ -128,9 +128,10 @@ public class MemberController {
     }
 
     @PostMapping("update")
-    public RedirectView update(MemberDTO memberDTO){
+    public RedirectView update(MemberDTO memberDTO, HttpSession session){
         log.info(memberDTO.toString());
         memberService.update(memberDTO.toVO());
+        session.setAttribute("member", memberDTO.toVO());
         return new RedirectView("/member/read?id=" + memberDTO.getId());
     }
 

@@ -8,11 +8,11 @@
     <title>개인 정보 수정</title>
 </head>
 <body>
-<form action="/member/update" method="post" th:object="${member}">
+<form action="/user/update" method="post" th:object="${user}">
     <input type="hidden" th:field="*{id}">
-    <input type="text" th:field="*{memberEmail}">
-    <input type="password" th:field="*{memberPassword}">
-    <input type="text" th:field="*{memberName}">
+    <input type="text" th:field="*{userEmail}">
+    <input type="text" th:field="*{userPassword}">
+    <input type="text" th:field="*{userName}">
     <button>수정 완료</button>
 </form>
 </body>

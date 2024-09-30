@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VIEW</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        header {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<!--    <header th:insert="~{/test/header :: main-header}"></header>-->
+<!--    <header th:replace="~{/test/header :: main-header}"></header>-->
+    <header th:replace="~{/test/header :: #main}"></header>
+<!--    <header th:replace="~{/test/header :: main-header-param (${'전달받은 제목'}, ${'전달받은 내용'})}"></header>-->
+    <div></div>
+</body>
+</html>

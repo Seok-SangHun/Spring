@@ -11,35 +11,39 @@
     <button id="go-update">수정하기</button>
     <button id="go-postlist">전체목록</button>
     <button id="go-logout">로그아웃</button>
-    <table th:object="${member}">
+    <button id="go-delete">삭제하기</button>
+    <table th:object="${user}">
         <tr>
             <th>이메일</th>
             <th>이름</th>
         </tr>
-        <tr class="member-data">
+        <tr class="user-data">
 <!--            <td th:text="*{memberEmail}"></td>-->
 <!--            <td th:text="*{memberName}"></td>-->
-            <td id="memberEmail"></td>
-            <td id="memberName"></td>
+            <td id="userEmail"></td>
+            <td id="userName"></td>
         </tr>
     </table>
 </body>
 <script th:inline="javascript">
-    const memberDTO = [[${member}]];
-    const memberEmail = document.getElementById("memberEmail");
-    const memberName = document.getElementById("memberName");
+    const user = [[${user}]];
+    const userEmail = document.getElementById("userEmail");
+    const userName = document.getElementById("userName");
 
-    memberEmail.innerText = memberDTO.memberEmail;
-    memberName.innerText = memberDTO.memberName;
+    userEmail.innerText = user.userEmail;
+    userName.innerText = user.userName;
 
     document.getElementById("go-update").addEventListener("click", (e) => {
-        location.href = `/member/update?id=${memberDTO.id}`;
+        location.href = `/user/update?id=${user.id}`;
     });
     document.getElementById("go-postlist").addEventListener("click", (e) => {
-        location.href = `/post/list`;
+        location.href = `/past/list`;
     });
     document.getElementById("go-logout").addEventListener("click",(e) =>{
-        location.href = `/member/logout`
+        location.href = `/user/logout`
+    })
+    document.getElementById("go-delete").addEventListener("click",(e) =>{
+        location.href =  `/user/delete?id=${user.id}`;
     })
 </script>
 </html>
