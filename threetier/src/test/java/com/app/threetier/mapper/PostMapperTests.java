@@ -4,6 +4,7 @@ import com.app.threetier.domain.member.MemberVO;
 import com.app.threetier.domain.post.Pagination;
 import com.app.threetier.domain.post.PostDTO;
 import com.app.threetier.domain.post.PostVO;
+import com.app.threetier.domain.post.Search;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class PostMapperTests {
             postDTO.setPostTitle("테스트 제목" + i + 1);
             postDTO.setPostContent("테스트 내용" + i + 1);
             postDTO.setMemberId(members.get(randidx).getId());
+//            postDTO.setMemberId(1L);
             postDTO.setPostReadCount(i * randidx);
             postMapper.insert(postDTO.toVO());
         }
@@ -42,11 +44,16 @@ public class PostMapperTests {
     @Test
     public void testSelectAll(){
         Pagination pagination = new Pagination();
-        String recent = "recent";
+        Search search = new Search();
+
         pagination.setPage(3);
         pagination.setTotal(postMapper.selectTotal());
         pagination.progress();
-        List<PostDTO> posts = postMapper.selectAll(pagination, recent);
+
+//        search.setTypes(new String[]{"post-title", "member-name"});
+//        search.setKeyword("41");
+
+        List<PostDTO> posts = postMapper.selectAll(pagination, search);
         log.info("{}", posts.size());
         posts.stream().map(PostDTO::toString).forEach(log::info);
     }

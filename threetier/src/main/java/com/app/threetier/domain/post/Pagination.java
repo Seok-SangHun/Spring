@@ -16,10 +16,11 @@ public class Pagination {
     private int realEnd;
     private boolean prev, next;
     private int total;
+    private String order;
 
     public void progress() {
         this.page = page == null ? 1 : page;
-        this.rowCount = 10;
+        this.rowCount = 5;
         this.pageCount = 10;
         this.endRow = page * rowCount;
         this.startRow = endRow - rowCount + 1;

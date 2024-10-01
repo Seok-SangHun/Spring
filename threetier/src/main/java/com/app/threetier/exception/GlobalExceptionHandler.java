@@ -14,13 +14,3 @@ public class GlobalExceptionHandler {
         return new RedirectView("/member/login?status=false");
     }
 }
-
-//@ControllerAdvice(basePackages = "com.app.threetier.controller.user")
-//@Slf4j
-//public class GlobalExceptionHandler {
-//    @ExceptionHandler(LoginFailException.class)
-//    protected RedirectView handleLoginFailException(LoginFailException e) {
-//        log.error(e.getMessage());
-//        return new RedirectView("/user/login?status=false");
-//    }
-//}

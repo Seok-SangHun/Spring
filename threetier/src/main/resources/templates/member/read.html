@@ -9,8 +9,6 @@
 </head>
 <body>
     <button id="go-update">수정하기</button>
-    <button id="go-postlist">전체목록</button>
-    <button id="go-logout">로그아웃</button>
     <table th:object="${member}">
         <tr>
             <th>이메일</th>
@@ -35,12 +33,6 @@
     document.getElementById("go-update").addEventListener("click", (e) => {
         location.href = `/member/update?id=${memberDTO.id}`;
     });
-    document.getElementById("go-postlist").addEventListener("click", (e) => {
-        location.href = `/post/list`;
-    });
-    document.getElementById("go-logout").addEventListener("click",(e) =>{
-        location.href = `/member/logout`
-    })
 </script>
 </html>
 

@@ -15,6 +15,8 @@ public class PostDTO {
     private String createdDate;
     private String updatedDate;
     private int postReadCount;
+    private String memberEmail;
+    private String memberPassword;
     private String memberName;
 
     public PostVO toVO(){
