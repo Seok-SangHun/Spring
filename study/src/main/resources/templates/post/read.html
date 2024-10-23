@@ -1,0 +1,222 @@
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport"-->
+<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <title>조회</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <table th:object="${post}">-->
+<!--        <tr>-->
+<!--            <th>번호</th>-->
+<!--            <th>제목</th>-->
+<!--            <th>내용</th>-->
+<!--            <th>조회수</th>-->
+<!--            <th>작성자</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td th:text="*{id}"></td>-->
+<!--            <td th:text="*{postTitle}"></td>-->
+<!--            <td th:text="*{postContent}"></td>-->
+<!--            <td th:text="*{postReadCount}"></td>-->
+<!--            <td th:text="*{memberName}"></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+
+<!--    <h2>댓글</h2>-->
+<!--    <div id="replyList"></div>-->
+
+<!--    <form id="replyForm">-->
+<!--        <textarea id="replyContent" placeholder="댓글을 입력하세요"></textarea>-->
+<!--        <button type="submit">댓글 작성</button>-->
+<!--    </form>-->
+<!--</body>-->
+<!--<script>-->
+<!--    const replyService = (() => {-->
+<!--        const write = async (reply) => {-->
+<!--            await fetch("/replies/write", {-->
+<!--                method: "post",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json"-->
+<!--                },-->
+<!--                body: JSON.stringify(reply)-->
+<!--            });-->
+<!--        }-->
+
+<!--        const getList = async (page, postId, callback) => {-->
+<!--            const response = await fetch(`/replies/${postId}/${page}`);-->
+<!--            const replies = await response.json();-->
+<!--            if (callback) {-->
+<!--                callback(replies);-->
+<!--            }-->
+<!--        }-->
+
+<!--        const update = async (reply) => {-->
+<!--            await fetch("/replies/update", {-->
+<!--                method: "put",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json"-->
+<!--                },-->
+<!--                body: JSON.stringify(reply)-->
+<!--            });-->
+<!--        }-->
+
+<!--        const remove = async (id) => {-->
+<!--            await fetch(`/replies/${id}`, {-->
+<!--                method: "delete"-->
+<!--            });-->
+<!--        }-->
+
+<!--        return { write, getList, update, remove };-->
+<!--    })();-->
+
+<!--    const showList = (replies) => {-->
+<!--        let text = '';-->
+<!--        replies.forEach((reply) => {-->
+<!--            text += `-->
+<!--                    <div class="reply">-->
+<!--                        <p>${reply.replyContent}</p>-->
+<!--                        <button onclick="replyService.remove(${reply.id})">삭제</button>-->
+<!--                    </div>-->
+<!--                `;-->
+<!--        });-->
+<!--        document.getElementById('replyList').innerHTML = text;-->
+<!--    }-->
+
+<!--    const postId = 841; // 예시 postId, 동적으로 가져올 수 있도록 조정할 수 있습니다.-->
+<!--    replyService.getList(postId, 1, showList);-->
+
+<!--    document.getElementById('replyForm').addEventListener('submit', (event) => {-->
+<!--        event.preventDefault();-->
+<!--        const replyContent = document.getElementById('replyContent').value;-->
+<!--        const reply = { replyContent, postId }; // reply 객체에 postId 포함\-->
+<!--        replyService.write(reply).then(() => {-->
+<!--            // 댓글 작성 후 댓글 목록 새로 고침-->
+<!--            replyService.getList(postId, 1, showList);-->
+<!--            document.getElementById('replyContent').value = ''; // 입력 필드 초기화-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<!--&lt;!&ndash;<script src="/js/reply/reply-service.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/js/reply/reply-layout.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/js/reply/reply-event.js"></script>&ndash;&gt;-->
+<!--</html>-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>조회</title>
+</head>
+<body>
+<table th:object="${post}">
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>조회수</th>
+        <th>작성자</th>
+    </tr>
+    <tr>
+        <td th:text="*{id}" id="postId"></td> <!-- postId를 여기에 동적으로 표시 -->
+        <td th:text="*{postTitle}"></td>
+        <td th:text="*{postContent}"></td>
+        <td th:text="*{postReadCount}"></td>
+        <td th:text="*{memberName}"></td>
+    </tr>
+</table>
+
+<h2>댓글</h2>
+<div id="replyList"></div>
+
+<form id="replyForm">
+    <textarea id="replyContent" placeholder="댓글을 입력하세요"></textarea>
+    <button type="submit">댓글 작성</button>
+</form>
+</body>
+<script>
+    const replyService = (() => {
+        const write = async (reply) => {
+            await fetch("/replies/write", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reply)
+            });
+        }
+
+        const getList = async (postId, page, callback) => {
+            const response = await fetch(`/replies/${postId}/${page}`);
+            const replies = await response.json();
+            if (callback) {
+                callback(replies);
+            }
+        }
+
+        const update = async (reply) => {
+            await fetch("/replies/update", {
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reply)
+            });
+        }
+
+        const remove = async (id, postId) => {
+            await fetch(`/replies/${id}`, {
+                method: "delete"
+            });
+            // 댓글 삭제 후 목록 새로 고침
+            return await getList(postId, 1, showList); // postId를 추가하여 목록을 새로 고침
+        }
+
+        return {write: write, getList: getList, update: update, remove: remove};
+    })();
+
+    const showList = (replies) => {
+        let text = '';
+        replies.forEach((reply) => {
+            text += `
+                <div class="reply">
+                    <p>${reply.replyContent}</p>
+                    <button onclick="replyService.remove(${reply.id}, '${postId}')">삭제</button>
+                </div>
+            `;
+        });
+        document.getElementById('replyList').innerHTML = text;
+    }
+
+    // 동적으로 postId를 가져오기 (예: HTML에서 id를 통해 가져오기)
+    const postIdElement = document.getElementById('postId');
+    const postId = postIdElement ? postIdElement.textContent.trim() : null;
+
+    if (postId) {
+        // 댓글 목록 가져오기
+        replyService.getList(postId, 1, showList);
+    }
+
+    document.getElementById('replyForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const replyContent = document.getElementById('replyContent').value;
+        const reply = { replyContent, postId }; // reply 객체에 postId 포함
+
+        if (postId) {
+            replyService.write(reply).then(() => {
+                // 댓글 작성 후 댓글 목록 새로 고침
+                replyService.getList(postId, 1, showList);
+                document.getElementById('replyContent').value = ''; // 입력 필드 초기화
+            });
+        } else {
+            console.error("postId를 찾을 수 없습니다.");
+        }
+    });
+
+</script>
+</html>
