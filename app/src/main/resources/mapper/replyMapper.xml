@@ -11,7 +11,7 @@
         from tbl_member m join tbl_reply r
         on m.id = r.member_id and post_id = #{postId}
         order by id desc
-        limit #{pagination.startRow}, #{pagination.rowCount}
+        limit #{pagination.startRow}, #{pagination.moreRowcount}
     </select>
 
     <select id="selectCount">

@@ -20,7 +20,10 @@ const replyService = (() => {
     const update = async (reply) => {
         await fetch("/replies/update", {
             method: "put",
-            body: JSON.stringify(reply)
+            body: JSON.stringify(reply),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
         });
     }
 

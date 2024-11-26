@@ -1,44 +1,93 @@
 const replyLayout = document.querySelector("#replies");
-const replyPaging = document.querySelector("#paging");
+// const replyPaging = document.querySelector("#paging");
+const moreButton = document.getElementById("more-button");
 
-const showList = ({replies, pagination}) => {
-    console.log("showList");
+const showListScroll = ({replies, pagination}) => {
     let text = ``;
-    let pagingText = ``;
 
+    // 다음 페이지 없을 때,
+    if(pagination.rowCount >= replies.length){
+        // 더 불러오지 않게 막아준다.
+        globalThis.loadingFlag = true;
+    }else{
+        replies.pop();
+    }
     replies.forEach((reply) => {
         text += `
             <div style="display: flex">
                 <div>${reply.id}</div>
-                <div>${reply.replyContent}</div>
+                <div class="reply-content-${reply.id}">${reply.replyContent}</div>
                 <div>${reply.memberName}</div>
                 <div>${timeForToday(reply.createdDate)}</div>
+                <button class="update reply-id-${reply.id}">수정</button> <button class="delete reply-id-${reply.id}">삭제</button>
             </div>
         `;
     });
-    replyLayout.innerHTML = text;
-
-    if(pagination.prev){
-        pagingText += `
-            <div><a href="${pagination.startPage - 1}">이전</a></div>
-        `
-    }
-    for(let i=pagination.startPage; i<=pagination.endPage; i++){
-        if(pagination.page === i){
-            pagingText += `<div style="color: red">${i}</div>`
-        }else{
-            pagingText += `<div><a href="${i}">${i}</a></div>`
-        }
-    }
-
-    if(pagination.next) {
-        pagingText += `
-            <div><a href="${pagination.endPage + 1}">다음</a></div>
-        `
-    }
-
-    replyPaging.innerHTML = pagingText;
+    replyLayout.innerHTML += text;
 }
+
+// const showListMore = ({replies, pagination}) => {
+//     let text = ``;
+//
+//     // 다음 페이지 없을 때,
+//     if(pagination.rowCount >= replies.length){
+//         // 더보기 없애기
+//         moreButton.style.display = "none";
+//     }else{
+//         replies.pop();
+//     }
+//     replies.forEach((reply) => {
+//         text += `
+//             <div style="display: flex">
+//                 <div>${reply.id}</div>
+//                 <div class="reply-content-${reply.id}">${reply.replyContent}</div>
+//                 <div>${reply.memberName}</div>
+//                 <div>${timeForToday(reply.createdDate)}</div>
+//                 <button class="update reply-id-${reply.id}">수정</button> <button class="delete reply-id-${reply.id}">삭제</button>
+//             </div>
+//         `;
+//     });
+//     replyLayout.innerHTML += text;
+// }
+
+// const showList = ({replies, pagination}) => {
+//     let text = ``;
+//     let pagingText = ``;
+//
+//     replies.forEach((reply) => {
+//         text += `
+//             <div style="display: flex">
+//                 <div>${reply.id}</div>
+//                 <div class="reply-content-${reply.id}">${reply.replyContent}</div>
+//                 <div>${reply.memberName}</div>
+//                 <div>${timeForToday(reply.createdDate)}</div>
+//                 <button class="update reply-id-${reply.id}">수정</button> <button class="delete reply-id-${reply.id}">삭제</button>
+//             </div>
+//         `;
+//     });
+//     replyLayout.innerHTML = text;
+//
+//     if(pagination.prev){
+//         pagingText += `
+//             <div><a href="${pagination.startPage - 1}">이전</a></div>
+//         `
+//     }
+//     for(let i=pagination.startPage; i<=pagination.endPage; i++){
+//         if(pagination.page === i){
+//             pagingText += `<div style="color: red">${i}</div>`
+//         }else{
+//             pagingText += `<div><a href="${i}">${i}</a></div>`
+//         }
+//     }
+//
+//     if(pagination.next) {
+//         pagingText += `
+//             <div><a href="${pagination.endPage + 1}">다음</a></div>
+//         `
+//     }
+//
+//     replyPaging.innerHTML = pagingText;
+// }
 
 function timeForToday(datetime) {
     const today = new Date();

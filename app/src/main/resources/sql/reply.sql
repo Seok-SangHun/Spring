@@ -18,3 +18,6 @@ insert into tbl_reply (reply_content, member_id, post_id)
 
 select * from tbl_reply
 order by id desc;
+
+delete from tbl_reply
+where id > 20;

@@ -11,5 +11,6 @@
         <typeAlias type="com.app.app.domain.post.PostVO" alias="postVO"/>
         <typeAlias type="com.app.app.domain.post.PostDTO" alias="postDTO"/>
         <typeAlias type="com.app.app.domain.reply.ReplyVO" alias="replyVO"/>
+        <typeAlias type="com.app.app.domain.file.FileVO" alias="fileVO"/>
     </typeAliases>
 </configuration>

@@ -17,7 +17,7 @@ public interface ReplyMapper {
     public List<ReplyDTO> selectAll(@Param("pagination") Pagination pagination, @Param("postId") Long postId);
 
 //    댓글 수정
-    public void update(ReplyVO replyVO);
+    public void     update(ReplyVO replyVO);
 
 //    댓글 삭제
     public void delete(Long id);

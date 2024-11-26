@@ -26,14 +26,13 @@
     </table>
     <textarea id="reply-content" placeholder="이쁘고 고운말로 작성해주세요"></textarea><button id="write">완료</button>
     <div id="replies"></div>
-    <div id="paging" style="display: flex"></div>
+<!--    <div id="paging" style="display: flex"></div>-->
+<!--    <div id="more-button" style="text-align: center; cursor: pointer; background: yellow">더보기</div>-->
 </body>
 <script th:inline="javascript">
     globalThis.page = 0;
     const postId = [[${post.id}]];
     const memberId = [[${session.member.id}]];
-    console.log(postId);
-    console.log(memberId);
 </script>
 <script src="/js/reply/reply-service.js"></script>
 <script src="/js/reply/reply-layout.js"></script>

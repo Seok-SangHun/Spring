@@ -1,5 +1,6 @@
 package com.app.app.controller.post;
 
+import com.app.app.domain.file.FileDTO;
 import com.app.app.domain.member.MemberVO;
 import com.app.app.domain.post.*;
 import com.app.app.service.post.PostService;
@@ -12,8 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/post/*")
@@ -27,10 +32,19 @@ public class PostController {
     public void goToWriteForm(PostDTO postDTO){;}
 
     @PostMapping("write")
-    public void write(PostDTO postDTO){
+    public void write(PostDTO postDTO, List<MultipartFile> files){
         postDTO.setMemberId(((MemberVO) session.getAttribute("member")).getId());
+        List<FileDTO> fileDTOs = new ArrayList<>();
 
-        postService.write(postDTO.toVO());
+//        for(int i=0; i<files.size(); i++){
+//            FileDTO fileDTO = new FileDTO();
+//            fileDTO.setPostId(postDTO.getId());
+//            fileDTO.setFileName(files.get(i).getOriginalFilename());
+//            fileDTOs.add(fileDTO);
+//        }
+
+//        postService.write(postDTO.toVO(), fileDTOs.stream().map(FileDTO::toVO).collect(Collectors.toList()));
+//        postService.write(postDTO, files);
     }
 
     @GetMapping("list")
